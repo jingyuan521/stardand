@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org
+http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>标准信息列表</title>
+    <script type="text/javascript" src="./js/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+       function check() {
+               var sid = $("#sid").val();
+               alert(sid);
+               $.ajax({
+                   url:"delDo",
+                   type:"get",
+                   data:"sid="+sid,
+                   dataType:"text",
+                   success:function (result) {
+                       alert("删除成功");
+                   },
+                   error:function () {
+                       alert("删除失败");
+                   }
+               })
+
+
+       }
+
+    </script>
+
+</head>
+<body>
+
+<table border="1" cellspacing="0" cellpadding="0">
+    <tr align="center">
+        <td colspan="7">标准信息列表</td>
+
+    </tr>
+
+    <tr align="center">
+        <form action="" method="post">
+        <td colspan="7"><input type="text" name="stdnum" />
+            <input type="submit" value="提交检索">
+        </form>
+            <button name="add"><a href="add" style="text-decoration: none;color: black">新增标准</a></button>
+            <button name="del"><a href="" style="text-decoration: none;color: black" onclick="check()">删除标准</a></button>
+        </td>
+    </tr>
+
+    <tr align="center">
+        <td><input type="checkbox" name="" /></td>
+        <td>标准号</td>
+        <td>中文名称</td>
+        <td>版本</td>
+        <td>发布日期</td>
+        <td>实施日期</td>
+        <td>操作</td>
+    </tr>
+
+    <tr th:each="standard:${standardList}">
+        <td><input type="checkbox" id="sid" th:value="${standard.getId()}"/></td>
+        <td th:text="${standard.getStd_num()}"></td>
+        <td th:text="${standard.getZhname()}"></td>
+        <td th:text="${standard.getSversion()}"></td>
+        <td th:text="${standard.getRelease_date()}"></td>
+        <td th:text="${standard.getImpl_date()}"></td>
+        <td>
+            <a href="">修改</a>
+            <a href="down">下载</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
